@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="9.0.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MockApi.Core\MockApi.Core.csproj" />
+    <ProjectReference Include="..\MockApi.Data\MockApi.Data.csproj" />
+    <ProjectReference Include="..\MockApi.Workers\MockApi.Workers.csproj" />
+  </ItemGroup>
+
+</Project>

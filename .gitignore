@@ -16,6 +16,10 @@ next-env.d.ts
 /playwright-report
 /test-results
 
+# .NET
+bin/
+obj/
+
 # misc
 .DS_Store
 *.pem
