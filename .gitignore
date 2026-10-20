@@ -3,6 +3,8 @@
 
 # next.js
 /.next/
+/.next-e2e/
+/.next-playwright/
 /out/
 next-env.d.ts
 

@@ -22,7 +22,7 @@ spec_refs: ["§1.1"]
 
 ## Context
 
-Developers often open a mock URL on a phone while debugging; the workspace still needs to be usable.
+Developers often open a FakeEnd URL on a phone while debugging; the workspace still needs to be usable.
 
 ## Scope
 

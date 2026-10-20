@@ -4,7 +4,7 @@ title: "JSON sample input and infer"
 milestone: "Sprint — 10–25 min"
 priority: "P0"
 size: "15 min"
-status: "todo"
+status: "review"
 owner: ""
 depends_on: ["SPR-01"]
 spec_refs: ["§2","§3.1","§6","§9"]
@@ -59,16 +59,16 @@ locally before any request is sent.
 
 ## Acceptance criteria
 
-- [ ] A valid object sample infers successfully and shows the schema JSON.
-- [ ] An array sample works; **Return as list** is disabled for array roots.
-- [ ] Empty input disables **Infer schema**.
-- [ ] Invalid JSON disables inference and shows a readable message.
-- [ ] The inference request never sends an empty sample.
-- [ ] `warnings` render without blocking creation.
-- [ ] Sample change after inference marks the schema stale and disables creation.
-- [ ] `400`, `422` and `413` errors show `code` + `detail`, not a generic message.
-- [ ] The button exposes `aria-busy` while inferring.
-- [ ] The flow is keyboard accessible and the textarea has a label.
+- [x] A valid object sample infers successfully and shows the schema JSON.
+- [x] An array sample works; **Return as list** is disabled for array roots.
+- [x] Empty input disables **Infer schema**.
+- [x] Invalid JSON disables inference and shows a readable message.
+- [x] The inference request never sends an empty sample.
+- [x] `warnings` render without blocking creation.
+- [x] Sample change after inference marks the schema stale and disables creation.
+- [x] `400`, `422` and `413` errors show `code` + `detail`, not a generic message.
+- [x] The button exposes `aria-busy` while inferring.
+- [x] The flow is keyboard accessible and the textarea has a label.
 
 ## Implementation notes
 
@@ -89,11 +89,11 @@ locally before any request is sent.
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Loading, empty, error and success states are handled.
-- [ ] Works at 360 px and by keyboard.
-- [ ] Build and typecheck pass.
-- [ ] No sample content is logged to the console.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Loading, empty, error and success states are handled.
+- [x] Works at 360 px and by keyboard.
+- [x] Build and typecheck pass.
+- [x] No sample content is logged to the console.
 
 ---
 

@@ -1,8 +1,8 @@
-# MockAPI — Frontend Specification (90-Minute Sprint)
+# FakeEnd — Frontend Specification (90-Minute Sprint)
 
 Frontend: **Next.js (App Router) + TypeScript + Tailwind**.
 Backend: ASP.NET Core at `http://localhost:5031` (see `src/MockApi.Api/Properties/launchSettings.json`).
-Source of truth for the product: `mockapi-technical-spec.md`. This document is the **short sprint contract**; where it is silent, the main spec applies.
+Source of truth for the product: `fakeend-technical-spec.md`. This document is the **short sprint contract**; where it is silent, the main spec applies.
 
 > Goal: one page. Paste JSON, infer a schema, configure delay/errors, create a mock, copy the URL, call it, and inspect the response.
 
@@ -17,7 +17,7 @@ Source of truth for the product: `mockapi-technical-spec.md`. This document is t
 - Optional `POST /api/v1/preview` to show sample data before creating.
 - `POST /api/v1/projects` with **one endpoint**.
 - Display `baseUrl` and full endpoint URL, copy buttons.
-- Test panel: call the mock URL, show status, body, latency, and headers.
+- Test panel: call the FakeEnd URL, show status, body, latency, and headers.
 - Inline validation and backend error rendering.
 - Loading, empty, error, and success states.
 
@@ -38,7 +38,7 @@ One route, three stacked areas on mobile / two columns on desktop:
 
 ```
 +-------------------------------------------------------------+
-| Header: MockAPI                         API: localhost:5031 |
+| Header: FakeEnd                         API: localhost:5031 |
 +----------------------------+--------------------------------+
 | 1. JSON sample             | 3. Result                      |
 |    textarea                |    baseUrl + copy              |
@@ -179,7 +179,7 @@ Errors: `400 validation_failed`, `409 duplicate_endpoint`, `422 response_too_lar
 
 Use it for limits/status lists. If unavailable, fall back to the constants in section 5. Do not block the page on it.
 
-### 3.5 Mock runtime
+### 3.5 FakeEnd runtime
 
 The created `baseUrl` is a normal HTTP URL:
 
@@ -204,7 +204,7 @@ Injected/system errors use:
     "status": 503,
     "code": "injected_error",
     "title": "Service Unavailable",
-    "message": "Simulated error injected by MockAPI.",
+    "message": "Simulated error injected by FakeEnd.",
     "injected": true,
     "requestId": "b2f1c2a0-5a4f-4c0a-9a43-3f5a8a7a1e11"
   }
@@ -423,7 +423,7 @@ If behind schedule, cut the optional preview panel and schema collapsible first.
 
 ## 9. Acceptance criteria
 
-- [ ] Paste the demo sample, infer, create, and see a mock URL.
+- [ ] Paste the demo sample, infer, create, and see a FakeEnd URL.
 - [ ] Copy the URL; `GET` it in a browser or curl and receive generated JSON.
 - [ ] Calling the URL twice returns different data (unless a seed is set).
 - [ ] `X-Mock-Delay-Ms` matches the configured range.

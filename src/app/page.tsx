@@ -1,36 +1,12 @@
-import type { Metadata } from "next";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import { Hero } from "@/components/landing/hero";
-import {
-  Features,
-  FinalCta,
-  HowItWorks,
-  Privacy,
-} from "@/components/landing/sections";
-
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-  openGraph: {
-    url: "/",
-    title: "MockAPI — Paste JSON, get a live mock API",
-    description:
-      "Paste a JSON sample, review the inferred schema, and call a live URL that returns fresh, realistic data.",
-  },
-};
+import { Builder } from "@/components/builder/builder";
 
 export default function HomePage() {
   return (
-    <>
-      <SiteHeader />
-      <main id="main-content">
-        <Hero />
-        <HowItWorks />
-        <Features />
-        <Privacy />
-        <FinalCta />
-      </main>
-      <SiteFooter />
-    </>
+    <main
+      id="main-content"
+      className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8"
+    >
+      <Builder />
+    </main>
   );
 }

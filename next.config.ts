@@ -3,23 +3,12 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV !== "production";
 const apiOrigin =
   process.env.NEXT_PUBLIC_API_BASE_URL?.trim().replace(/\/+$/, "") ||
-  "http://localhost:5080";
-const configuredMockOrigin =
-  process.env.NEXT_PUBLIC_MOCK_BASE_URL?.trim().replace(/\/+$/, "") || null;
+  "http://localhost:5031";
 
-/**
- * QLT-09: the management API is the only origin we can pin at build time.
- * When `NEXT_PUBLIC_MOCK_BASE_URL` is not set, `/meta` chooses the runtime
- * origin at runtime, so `https:` is allowed for that data-plane call only.
- * An explicit mock origin tightens the policy further.
- */
+/** The management API is the only origin we can pin at build time. */
 function contentSecurityPolicy(): string {
-  const connect = [
-    "'self'",
-    apiOrigin,
-    ...(configuredMockOrigin ? [configuredMockOrigin] : ["https:"]),
-    ...(isDev ? ["ws:", "http://localhost:*"] : []),
-  ];
+  const connect = ["'self'", apiOrigin];
+  if (isDev) connect.push("ws:", "http://localhost:*");
 
   return [
     "default-src 'self'",
@@ -34,7 +23,9 @@ function contentSecurityPolicy(): string {
     "base-uri 'self'",
     "form-action 'self'",
     "object-src 'none'",
-    ...(isDev ? [] : ["upgrade-insecure-requests"]),
+    ...(isDev || apiOrigin.startsWith("https://")
+      ? []
+      : ["upgrade-insecure-requests"]),
   ].join("; ");
 }
 
@@ -54,15 +45,6 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=(), payment=()",
           },
-          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-        ],
-      },
-      {
-        // The MSW worker is only used by dev:mock and E2E. Never cache it.
-        source: "/mockServiceWorker.js",
-        headers: [
-          { key: "Cache-Control", value: "no-store, max-age=0" },
-          { key: "Service-Worker-Allowed", value: "/" },
         ],
       },
     ];

@@ -1,6 +1,6 @@
 # Archived legacy plan
 
-This directory contains the previous **multi-page MockAPI frontend plan** (61 tasks:
+This directory contains the previous **multi-page FakeEnd frontend plan** (61 tasks:
 FND/WIZ/PRJ/RUN/QLT/LAU). It was superseded on 2026-10-20 by the **90-minute single-page
 sprint contract** in [`../../frontend-spec.md`](../../frontend-spec.md).
 

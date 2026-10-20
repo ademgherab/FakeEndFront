@@ -42,7 +42,7 @@ Every management call shares auth, error parsing, cancellation and timeouts. One
 ## Implementation notes
 
 - Keep the runtime JSON parser separate from the ProblemDetails parser but return the same `AppError` type.
-- Expose the raw response only for the Try-it console, which calls the mock runtime directly.
+- Expose the raw response only for the Try-it console, which calls the FakeEnd runtime directly.
 
 ## Testing
 

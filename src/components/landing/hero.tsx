@@ -45,22 +45,17 @@ export function Hero() {
       <div aria-hidden="true" className="hero-grid absolute inset-0 -z-10" />
       <div aria-hidden="true" className="hero-glow absolute inset-0 -z-10" />
 
-      <div className="mx-auto w-full max-w-6xl px-5 pb-16 pt-14 sm:px-8 sm:pb-20 sm:pt-24 lg:pb-28">
+      <div className="mx-auto w-full max-w-6xl px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-20 lg:pb-24">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-2 rounded-full border border-lime-300/25 bg-lime-300/[0.08] px-3 py-1 text-xs font-medium text-lime-200">
-              <span
-                aria-hidden="true"
-                className="size-1.5 rounded-full bg-lime-300"
-              />
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-lime-300" />
               {hero.eyebrow}
             </p>
 
             <h1 className="mt-5 text-balance text-4xl font-semibold tracking-tight text-zinc-50 sm:text-5xl lg:text-6xl">
               <span className="block">{hero.titleLead}</span>
-              <span className="mt-1 block text-lime-300">
-                {hero.titleAccent}
-              </span>
+              <span className="mt-1 block text-lime-300">{hero.titleAccent}</span>
             </h1>
 
             <p className="mt-5 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
@@ -75,12 +70,12 @@ export function Hero() {
                 {hero.primaryCta.label}
                 <ArrowRight />
               </Link>
-              <Link
+              <a
                 href={hero.secondaryCta.href}
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-zinc-100 transition-colors hover:border-white/25 hover:bg-white/[0.06]"
               >
                 {hero.secondaryCta.label}
-              </Link>
+              </a>
             </div>
 
             <p className="mt-6 flex items-center gap-2 text-xs text-zinc-400">

@@ -1,51 +1,81 @@
+/**
+ * Every string on the landing page lives here so the copy can be edited in one
+ * place. The page renders from this file alone: no API call, no `/meta`
+ * request, no backend.
+ *
+ * The copy only claims what the sprint product actually does — inference,
+ * delay, injected errors, list size, method/path/status and an open runtime.
+ */
+
+export type FeatureIconName =
+  | "schema"
+  | "clock"
+  | "alert"
+  | "list"
+  | "route"
+  | "terminal";
+
+export interface FeatureItem {
+  icon: FeatureIconName;
+  title: string;
+  body: string;
+}
+
+export interface StepItem {
+  number: string;
+  title: string;
+  body: string;
+}
+
 export const landingContent = {
   brand: {
-    name: "MockAPI",
+    name: "FakeEnd",
     mark: "{}",
   },
   nav: {
     links: [
-      { label: "How it works", href: "/#how-it-works" },
-      { label: "Features", href: "/#features" },
-      { label: "Privacy", href: "/#privacy" },
+      { label: "How it works", href: "#how-it-works" },
+      { label: "Features", href: "#features" },
+      { label: "Privacy", href: "#privacy" },
     ],
-    help: { label: "Help", href: "/help" },
-    cta: { label: "Open builder", href: "/new" },
+    cta: { label: "Open the builder", href: "/" },
   },
   hero: {
-    eyebrow: "JSON in. Live API out.",
+    eyebrow: "JSON in. Live endpoint out.",
     titleLead: "Paste JSON.",
-    titleAccent: "Call a live mock API.",
+    titleAccent: "Call a live fake endpoint.",
     description:
-      "MockAPI infers a schema from your sample and serves fresh, realistic data from a URL you can use right now. Add delay, random errors and pagination without writing a backend.",
-    primaryCta: { label: "Create a mock API", href: "/new" },
-    secondaryCta: { label: "Read the quickstart", href: "/help" },
-    footnote: "No account. No sign-up. Projects stay live for 7 days.",
+      "FakeEnd reads your sample, infers the schema and serves it back as fresh data over HTTP. Set the delay, the error rate and the list size, then call the URL from a browser, from curl or from your app.",
+    primaryCta: { label: "Create a fake endpoint", href: "/" },
+    secondaryCta: { label: "See how it works", href: "#how-it-works" },
+    footnote: "No account, no sign-up, one page from sample to URL.",
   },
   code: {
     caption:
-      "Example: a JSON sample is inferred into a schema and served as a list of realistic records.",
+      "A JSON sample is inferred into a schema and served back with the same shape and fresh values.",
     sampleLabel: "sample.json",
     sampleInputLabel: "Input",
     sample: `{
   "id": 1,
   "name": "Ahmed Benali",
   "email": "ahmed@example.com",
-  "created_at": "2026-01-15T10:30:00Z"
+  "roles": ["admin", "editor"],
+  "active": true,
+  "score": 87.5
 }`,
     servedLabel: "Served at",
     method: "GET",
-    url: "https://api.example.com/m/k3j9x2m8qa/users",
+    url: "http://localhost:5031/m/k3j9x2m8qa/users",
     responseLabel: "response.json",
     responseOutputLabel: "Fresh on every call",
-    response: `[
-  {
-    "id": 1,
-    "name": "Maya Chen",
-    "email": "maya.chen@example.org",
-    "created_at": "2026-09-02T08:15:00Z"
-  }
-]`,
+    response: `{
+  "id": 412,
+  "name": "Maya Chen",
+  "email": "maya.chen@example.org",
+  "roles": ["editor"],
+  "active": true,
+  "score": 64.25
+}`,
   },
   steps: {
     eyebrow: "How it works",
@@ -54,86 +84,70 @@ export const landingContent = {
       {
         number: "01",
         title: "Paste a JSON sample",
-        body: "An object, a list or a full paginated envelope. Inference fills in types, field meaning and nesting.",
+        body: "An object or a list. The API infers the fields, the types and the nesting it will serve, and shows you the schema.",
       },
       {
         number: "02",
         title: "Tune the behaviour",
-        body: "Set a fixed or random delay, inject errors at a chosen rate, and control list size, pagination and seed.",
+        body: "Pick the method, the path and the success status. Add a delay range, an error rate with its status codes, and the size of the list you get back.",
       },
       {
         number: "03",
         title: "Call the URL",
-        body: "Every request returns new data with the same shape. CORS is open, so your browser can call it directly.",
+        body: "Copy the endpoint URL and request it. Every call answers with the same shape and new values, and CORS is open so a browser can call it directly.",
       },
-    ],
+    ] satisfies StepItem[],
   },
   features: {
     eyebrow: "What you get",
     title: "Enough control to make a mock useful",
     description:
-      "Not just random strings. Shape, timing and failure modes you can actually test against.",
+      "Not just random strings. The shape, the timing and the failure modes you can actually test against.",
     items: [
       {
-        icon: "sparkles",
-        title: "Data that looks real",
-        body: "Names, emails, addresses, dates and prices are chosen from the field name, not only its type.",
-      },
-      {
-        icon: "layers",
-        title: "Your shape, preserved",
-        body: "Objects, arrays and nested items keep the structure of your sample, including optional and nullable fields.",
+        icon: "schema",
+        title: "A schema from your sample",
+        body: "Inference reads types, fields and nesting, so the endpoint answers with the structure you pasted — not a generic blob.",
       },
       {
         icon: "clock",
-        title: "Delay on purpose",
-        body: "Add 300–1500 ms, or any range up to 10 seconds, to see how your UI handles a slow response.",
+        title: "Realistic delay",
+        body: "Set a minimum and a maximum delay. Each response reports the delay it applied in the X-Mock-Delay-Ms header.",
       },
       {
         icon: "alert",
-        title: "Random failures",
-        body: "Inject 4xx and 5xx responses at a percentage you choose, so retry and error states get exercised.",
+        title: "Injectable errors",
+        body: "Choose a rate and the status codes to inject. The failing response says it was simulated and carries the request id.",
       },
       {
         icon: "list",
-        title: "Lists and pagination",
-        body: "Return 0 to 1000 items, or enable page and limit with total counts and pagination headers.",
+        title: "Lists of any size",
+        body: "Return a list instead of a single object and set how many records it holds, from one to a thousand.",
+      },
+      {
+        icon: "route",
+        title: "Method, path and status",
+        body: "GET, POST, PUT or DELETE on the path you want, answering with the success status your client expects.",
       },
       {
         icon: "terminal",
-        title: "Logs that explain",
-        body: "See method, path, status, delay and latency for the last 1,000 calls. New entries arrive while you watch.",
+        title: "Test it in place",
+        body: "Call the endpoint from the page and read the status, the latency, the headers and the body without leaving the browser.",
       },
-    ],
-    extras:
-      "Also included: a fixed seed for repeatable output · CORS from every origin · path parameters · errors you can tell apart from real ones.",
+    ] satisfies FeatureItem[],
   },
   privacy: {
     eyebrow: "Privacy",
-    title: "Do not paste real or sensitive data.",
-    body: "Samples are analyzed in memory and never stored. The one exception is a field detected as an enum: its sample values are kept so the generator can reuse them.",
-    points: [
-      "No accounts, and no IP address is stored.",
-      "Mock request bodies are kept in logs, truncated to 4 KB.",
-      "Projects expire after 7 days, then return 410 for 3 more days before deletion.",
-    ],
-  },
-  finalCta: {
-    title: "Stop mocking by hand.",
-    description:
-      "Paste one sample and get a URL your frontend can call in the next minute.",
-    primaryCta: { label: "Create a mock API", href: "/new" },
-    secondaryCta: { label: "Read the quickstart", href: "/help" },
+    title: "Do not paste real or sensitive data",
+    body: "The sample is sent to the API to build the mock, so treat it like any other request. FakeEnd keeps nothing in your browser: no sample, no schema and no token is written to local or session storage, and the page reloads clean.",
   },
   footer: {
-    note: "No accounts. Projects expire after 7 days.",
+    note: "Paste JSON, get a live fake endpoint.",
     links: [
-      { label: "Builder", href: "/new" },
-      { label: "Quickstart", href: "/help" },
-      { label: "Privacy", href: "/#privacy" },
+      { label: "How it works", href: "#how-it-works" },
+      { label: "Features", href: "#features" },
+      { label: "Privacy", href: "#privacy" },
+      { label: "Builder", href: "/" },
     ],
   },
-} as const;
-
-export type LandingContent = typeof landingContent;
-export type FeatureItem = LandingContent["features"]["items"][number];
+};

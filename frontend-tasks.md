@@ -1,4 +1,4 @@
-# MockAPI — Frontend Sprint Plan (90 minutes)
+# FakeEnd — Frontend Sprint Plan (90 minutes)
 
 > **Source of truth:** [`frontend-spec.md`](./frontend-spec.md).
 > This plan replaces the previous multi-page task breakdown. The old plan is preserved in
@@ -30,7 +30,7 @@ not for completeness.
 | Settings | Method, path, success status, delay, error rate/codes, list size |
 | Create | `POST /api/v1/projects` with exactly one endpoint |
 | Result | Show `baseUrl` and full endpoint URL, copy buttons, token-returned note |
-| Test | Call the mock URL, show status, latency, headers and body |
+| Test | Call the FakeEnd URL, show status, latency, headers and body |
 | States | Empty, loading, invalid, error, success |
 | Preview | Optional `POST /api/v1/preview`; cut first if time is short |
 
@@ -99,7 +99,7 @@ Runtime errors use:
     "status": 503,
     "code": "injected_error",
     "title": "Service Unavailable",
-    "message": "Simulated error injected by MockAPI.",
+    "message": "Simulated error injected by FakeEnd.",
     "injected": true,
     "requestId": "b2f1c2a0-5a4f-4c0a-9a43-3f5a8a7a1e11"
   }
@@ -176,7 +176,7 @@ One route, three stacked areas on mobile / two columns on desktop:
 
 ```
 +-------------------------------------------------------------+
-| Header: MockAPI                         API: localhost:5031 |
+| Header: FakeEnd                         API: localhost:5031 |
 +----------------------------+--------------------------------+
 | 1. JSON sample             | 3. Result                      |
 |    privacy note            |    baseUrl + copy              |
@@ -291,16 +291,16 @@ constants in `lib/defaults.ts`; do not scatter literals through components.
 
 ## 7. Acceptance criteria
 
-- [ ] Paste the demo sample, infer, create, and see a mock URL.
-- [ ] Copy the URL; `GET` it in a browser or curl and receive generated JSON.
-- [ ] Calling the URL twice returns different data.
-- [ ] `X-Mock-Delay-Ms` matches the configured range.
-- [ ] With error rate 100%, the test panel shows the injected status and `injected: true`.
-- [ ] Invalid JSON disables inference and shows a readable message.
-- [ ] Invalid settings disable creation and flag the field.
-- [ ] Backend `4xx` errors render `code` and `detail`, not "Something went wrong".
-- [ ] Mobile layout is usable; no horizontal scroll at 360 px.
-- [ ] `npm run build` passes; no console errors in the demo flow.
+- [x] Paste the demo sample, infer, create, and see a FakeEnd URL.
+- [x] Copy the URL; `GET` it in a browser or curl and receive generated JSON.
+- [x] Calling the URL twice returns different data.
+- [x] `X-Mock-Delay-Ms` matches the configured range.
+- [x] With error rate 100%, the test panel shows the injected status and `injected: true`.
+- [x] Invalid JSON disables inference and shows a readable message.
+- [x] Invalid settings disable creation and flag the field.
+- [x] Backend `4xx` errors render `code` and `detail`, not "Something went wrong".
+- [x] Mobile layout is usable; no horizontal scroll at 360 px.
+- [x] `npm run build` passes; no console errors in the demo flow.
 
 ---
 

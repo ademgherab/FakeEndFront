@@ -1,39 +1,32 @@
-# MockAPI frontend
+# FakeEnd frontend
 
-Next.js (App Router) + TypeScript + Tailwind frontend for the MockAPI service.
-
-This repository is now scoped to the **90-minute single-page sprint** described in
-[`frontend-spec.md`](./frontend-spec.md). The previous multi-page plan is archived in
-[`tasks/archive/legacy-plan/`](./tasks/archive/legacy-plan/) and must not be executed.
-
-## Sprint goal
-
-One page: paste JSON → infer a schema → configure delay/errors/list size → create a mock →
-copy the URL → test the endpoint → inspect the response.
+Next.js (App Router) + TypeScript + Tailwind frontend for the FakeEnd sprint. One page
+(`/`) turns a JSON sample into a live fake endpoint, lets you test it, and shows the
+response. A static landing page (`/landing`) explains the product and links into it.
 
 ## Requirements
 
 - Node.js 20 or newer
-- npm (the sprint acceptance command is `npm run build`)
-- The MockAPI backend running at `http://localhost:5031`
+- npm (the repo commits a single `package-lock.json`)
 
 ## Local setup
 
 ```bash
-cp .env.example .env.local
 npm install
 npm run dev
 ```
 
-The app runs at <http://localhost:3000> and calls the backend directly from the browser.
+The app runs at <http://localhost:3000> and calls the backend directly. Set the backend
+origin with `NEXT_PUBLIC_API_BASE_URL`; it defaults to `http://localhost:5031`.
 
-## Environment variables
+## Environment
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `NEXT_PUBLIC_API_BASE_URL` | No | Backend origin. Defaults to `http://localhost:5031`. No trailing slash. |
+| `NEXT_PUBLIC_API_BASE_URL` | No | Management API origin. Defaults to `http://localhost:5031`. The client appends `/api/v1`. |
 
-There is no Next.js API route and no BFF. There is no auth header in the sprint.
+The variable is inlined into the browser bundle at build time, so it must never contain a
+secret.
 
 ## Scripts
 
@@ -42,36 +35,47 @@ There is no Next.js API route and no BFF. There is no auth header in the sprint.
 | `npm run dev` | Start the development server. |
 | `npm run build` | Production build. |
 | `npm run start` | Serve the production build. |
+| `npm run lint` | Run ESLint. |
+| `npm run typecheck` | Run `tsc --noEmit`. |
 
-Manual smoke per `frontend-spec.md` §9 is the required test pass. Unit/E2E suites from the
-old plan are out of scope.
+## Layout
 
-## Architecture
+```
+src/app/page.tsx                 # the builder page, renders the builder
+src/app/landing/page.tsx         # static landing page (no API call)
+src/components/builder/
+  builder.tsx                    # state machine and layout
+  json-sample-input.tsx          # sample, list switch, infer
+  settings-form.tsx              # method/path/status/delay/errors/list size + presets
+  schema-preview.tsx             # read-only JSON schema
+  result-panel.tsx               # baseUrl + endpoint URL + copy
+  test-panel.tsx                 # call the mock, show status/headers/body
+  copy-button.tsx                # clipboard copy with fallback
+  error-banner.tsx               # code + detail API error banner
+src/components/landing/
+  site-header.tsx                # brand, section links, CTA to the builder
+  hero.tsx                       # headline, subline, CTAs
+  code-preview.tsx               # sample in, served response out
+  sections.tsx                   # how it works, features, privacy
+  site-footer.tsx                # footer links
+  feature-icon.tsx               # inline SVG icons
+src/content/landing.ts           # every string on the landing page
+src/lib/
+  types.ts                       # frontend-spec.md §4 types
+  defaults.ts                    # settings defaults, presets, fallback limits
+  validation.ts                  # path/sample/settings validators
+  api.ts                         # BASE, request<T>, infer, preview, createProject
+examples/users.json              # demo fixture
+```
 
-- One route: `/`.
-- State lives in `page.tsx` (or a single `useMockBuilder` hook); no state manager.
-- `lib/api.ts` owns management calls; the mock test call uses raw `fetch`.
-- `lib/types.ts` mirrors the spec contract; `lib/defaults.ts` holds settings defaults and
-  fallback limits.
-- `examples/users.json` is the demo fixture.
-- No `localStorage`/`sessionStorage` persistence of samples, schemas or tokens.
+## Behavior notes
 
-## Tasks
-
-| Document | Purpose |
-| --- | --- |
-| [`frontend-spec.md`](./frontend-spec.md) | Sprint contract (source of truth). |
-| [`frontend-tasks.md`](./frontend-tasks.md) | Sprint plan, scope, state machine, acceptance. |
-| [`tasks/README.md`](./tasks/README.md) | Task index and 90-minute schedule. |
-| [`tasks/SPR-01…07`](./tasks/) | Individual sprint tasks. |
-
-## Out of scope
-
-Accounts, edit tokens as auth, saved projects, logs, pagination UI, schema field editor,
-multiple endpoints, seed/rate limits/OpenAPI, MSW, unit/E2E suites, dark-mode toggle,
-i18n and SSR data fetching. See `frontend-spec.md` §1.
-
-## Legacy plan
-
-The 61-task multi-page plan is archived at [`tasks/archive/legacy-plan/`](./tasks/archive/legacy-plan/)
-for reference only.
+- The landing page (`/landing`) is a server component: it renders without any API call and
+  its CTAs point at the builder (`/`).
+- The sample is parsed locally before any request. A bad sample disables inference.
+- Changing the sample after a successful inference marks the schema stale and disables
+  create until inference runs again.
+- Create sends `sample` or `schema` per endpoint, never both.
+- The edit token is never copied, logged or stored; a small "token returned" note is shown
+  only if the backend returns one.
+- No `localStorage`/`sessionStorage` persistence.

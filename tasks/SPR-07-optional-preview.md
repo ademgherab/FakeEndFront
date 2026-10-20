@@ -4,7 +4,7 @@ title: "Optional preview panel"
 milestone: "Sprint — optional"
 priority: "P2"
 size: "10 min"
-status: "todo"
+status: "done"
 owner: ""
 depends_on: ["SPR-03"]
 spec_refs: ["§3.2","§8","§9"]
@@ -37,11 +37,11 @@ creating a project. **Cut this task first** if the core flow is not finished.
 
 ## Acceptance criteria
 
-- [ ] Preview returns and displays formatted JSON.
-- [ ] Previewing never creates a project.
-- [ ] Loading and error states are handled.
-- [ ] The panel is collapsible and keyboard accessible.
-- [ ] Core create/copy/test still work when preview is unavailable.
+- [x] Preview returns and displays formatted JSON.
+- [x] Previewing never creates a project.
+- [x] Loading and error states are handled.
+- [x] The panel is collapsible and keyboard accessible.
+- [x] Core create/copy/test still work when preview is unavailable.
 
 ## Implementation notes
 
@@ -59,10 +59,10 @@ creating a project. **Cut this task first** if the core flow is not finished.
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Core flow is unaffected when preview fails.
-- [ ] Build and typecheck pass.
-- [ ] No new persistence or state library.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Core flow is unaffected when preview fails.
+- [x] Build and typecheck pass.
+- [x] No new persistence or state library.
 
 ---
 

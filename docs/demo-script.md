@@ -1,55 +1,52 @@
 # Five-minute demo script
 
 Two rehearsals are enough to make this smooth. The script assumes the app runs
-in mock mode (`pnpm dev:mock`), so no backend, no network and no rate limits
-can interrupt it. The same clicks work against a real backend — see
-[Running against a real API](#running-against-a-real-api).
+against a real backend (`npm run dev` plus a management API on
+`http://localhost:5031`), because the whole point of the demo is that the URL
+it produces really answers.
 
 ## Before you start (30 seconds)
 
-1. `pnpm dev:mock` and open <http://localhost:3000/dev/demo>.
-2. Click **Reset demo data**. The log table is now empty and the demo project
-   is back to its seeded state.
-3. Open <http://localhost:3000/p/demo> in a second tab. The project opens
-   because the demo token is stored in this browser.
-4. Check the expiry date in the project header. **Never demo a project that
-   expires during the session.** If it is close to expiry, create a fresh
-   project instead (steps 5–7 below take 30 seconds).
+1. `npm run dev` and open <http://localhost:3000>.
+2. Check the **API:** line in the header. It shows the origin the page talks
+   to. If it points somewhere else, set `NEXT_PUBLIC_API_BASE_URL` and restart.
+3. Open a second tab on the runtime origin. The **Test endpoint** button in
+   the app calls it from the browser, so a blocked origin shows up as a CORS
+   error rather than as a broken demo.
+
+> Optional opener: <http://localhost:3000/landing> is a static page that
+> explains the product in one screen. Show it for ten seconds before the
+> builder if the audience has not seen FakeEnd before; it needs no backend.
 
 ## The demo (4 minutes 30)
 
 | # | Click | Say | Expected outcome |
 | --- | --- | --- | --- |
-| 1 | **New project** | "Paste a JSON sample, get a live API." | The builder opens with the sample step. |
-| 2 | Click the **User list** example | "Any JSON works; inference reads names, types and patterns." | The editor fills with a two-record array and the size counter updates. |
-| 3 | Click **Infer schema** | "Inference proposes a schema I can edit." | The schema tree appears with fields, types and generators. |
-| 4 | In the tree, select a field and change its name to `full_name` | "Fields are editable before the project exists." | The tree and the preview update; the change is marked as unsaved. |
-| 5 | Click **Continue to settings**, set **Minimum (ms)** to `200` and **Maximum (ms)** to `400` | "Delay and error injection are part of the endpoint." | The delay fields show the new bounds. |
-| 6 | Set **Error rate (%)** to `0` | "Errors are opt-in; I will show one on the live call." | The status code field stays disabled until the rate is above 0. |
-| 7 | Click **Continue to preview** | "The preview is the same generator the runtime uses." | A JSON preview renders, and the project name field is above it. |
-| 8 | Type `Demo API` in **Project name (optional)** and click **Create project** | "Creating the project now." | The token screen appears. |
-| 9 | Show the **Edit token** | "This token is shown exactly once. I saved it." | The token is visible in the amber panel, with copy and download buttons. |
-| 10 | Tick **I saved this token somewhere safe**, then click **Open project** | "Now the project overview." | The overview lists the endpoint, its URL and the daily quota. |
-| 11 | Click **Open endpoint** → tab **Try it** | "The runtime needs no token; this is a real HTTP call." | The request panel shows the runtime URL. |
-| 12 | Click **Send request** | "Same shape every time, fresh values." | A `200` response with headers, latency and a JSON body appear. |
-| 13 | Click the **Logs** tab | "Every call is logged, and the table updates live." | The log row for the call appears within about two seconds, highlighted as new. |
-| 14 | Click the log row | "Status, delay, latency and the request id are all here." | The request detail dialog opens. |
-| 15 | Back on **Settings**, set **Error rate (%)** to `100` and the code to `500`, click **Save**, then **Try it** → **Send request** | "Injected errors are a real HTTP status, not a broken request." | The response shows a `500` with an “injected” badge, and the log records it. |
+| 1 | Paste a JSON sample in the editor | "Paste JSON, get a live endpoint." | The line under the editor turns green and reads **Valid JSON**. |
+| 2 | Click **Infer schema** | "The API reads the sample and proposes a schema." | The schema appears as read-only JSON on the right. |
+| 3 | Change the **Path** to `/demo/users` | "The path is part of the endpoint." | The field keeps the value; an invalid path is flagged under it. |
+| 4 | Set **Delay min (ms)** to `200` and **Delay max (ms)** to `400` | "Delay is part of the contract." | Both fields keep their values and the field errors stay empty. |
+| 5 | Set **Error rate (%)** to `10` and the codes to `500, 503` | "Errors are opt-in and bounded." | The rate field keeps `10`; the codes field is editable because the rate is above 0. |
+| 6 | Click the **Flaky demo** preset | "Or start from a preset." | The delay, rate and codes jump to the preset values. |
+| 7 | Click **Create mock** | "Creating the project now." | The result panel appears with the base URL and the endpoint URL. |
+| 8 | Click **Copy endpoint URL** | "Here is the URL you call." | The button flips to **Copied**. |
+| 9 | Click **Test endpoint** | "The runtime needs no token; this is a real HTTP call." | The status, the `X-Request-Id`, the delay header and the JSON body appear. |
+| 10 | Click the same URL in the second tab | "Same shape every time, fresh values." | The endpoint answers with a generated body. |
 
 ## Backup if the API is down
 
-- **Mock mode (default rehearsal):** `pnpm dev:mock` serves the whole flow
-  from the contract mocks. `/dev/demo` resets the seeded project and its logs.
-- **Recorded flow:** the steps above are deterministic; screen-record one
+- **A recorded flow:** the steps above are deterministic; screen-record one
   clean rehearsal and keep it locally as a fallback.
-- **Fresh project:** a new project never depends on the previous one, so a
+- **A fresh project:** a new project never depends on the previous one, so a
   failed create can simply be repeated.
+- **The editor still works:** the sample is parsed and the settings are
+  validated in the browser, so the builder can be demonstrated without a
+  backend — only **Infer schema** and **Create mock** need the API.
 
-## Running against a real API
+## Running against a staging API
 
-1. Set `NEXT_PUBLIC_API_BASE_URL` to the management API origin and start
-   `pnpm dev`.
-2. Create a new project in step 1 of the script; the demo project does not
-   exist on a real backend.
-3. Everything else is identical. If the API is slow, use the seeded mock
-   project for the log part of the demo.
+1. Set `NEXT_PUBLIC_API_BASE_URL` to the staging origin and run `npm run dev`.
+2. Everything else is identical. The header shows the origin in use, so there
+   is never any doubt about which backend the demo is hitting.
+3. Remember that `NEXT_PUBLIC_*` values are inlined at build time: a staging
+   build needs its own build.

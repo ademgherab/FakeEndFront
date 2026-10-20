@@ -4,7 +4,7 @@ title: "States, accessibility, responsive, build and smoke"
 milestone: "Sprint — 80–90 min"
 priority: "P0"
 size: "10 min"
-status: "todo"
+status: "review"
 owner: ""
 depends_on: ["SPR-02","SPR-03","SPR-04","SPR-05"]
 spec_refs: ["§6","§9","§10","§11"]
@@ -73,14 +73,14 @@ keyboard use, and run the real acceptance checklist.
 
 ## Acceptance criteria
 
-- [ ] All acceptance criteria in `frontend-spec.md` §9 pass.
-- [ ] Only `/` is routable; legacy pages are gone.
-- [ ] 360 px layout has no horizontal scroll.
-- [ ] Keyboard-only flow works end to end.
-- [ ] `npm run build` passes.
-- [ ] No console errors in the demo flow.
-- [ ] No sample/token is persisted in browser storage.
-- [ ] The demo script in `frontend-spec.md` §10 runs without a workaround.
+- [x] All acceptance criteria in `frontend-spec.md` §9 pass.
+- [x] Only `/` is routable; legacy pages are gone.
+- [x] 360 px layout has no horizontal scroll.
+- [x] Keyboard-only flow works end to end.
+- [x] `npm run build` passes.
+- [x] No console errors in the demo flow.
+- [x] No sample/token is persisted in browser storage.
+- [x] The demo script in `frontend-spec.md` §10 runs without a workaround.
 
 ## Implementation notes
 
@@ -102,11 +102,11 @@ keyboard use, and run the real acceptance checklist.
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Build and typecheck pass.
-- [ ] No console errors or warnings.
-- [ ] No out-of-scope routes or features remain.
-- [ ] Demo is rehearsed and the fallback plan is clear.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Build and typecheck pass.
+- [x] No console errors or warnings.
+- [x] No out-of-scope routes or features remain.
+- [x] Demo is rehearsed and the fallback plan is clear.
 
 ---
 

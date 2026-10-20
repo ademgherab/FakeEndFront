@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "name": "Ahmed Benali",
+  "email": "ahmed@example.com",
+  "roles": ["admin", "editor"],
+  "active": true,
+  "score": 87.5
+}

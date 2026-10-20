@@ -4,7 +4,7 @@ title: "Create mock, result panel and copy"
 milestone: "Sprint — 45–65 min"
 priority: "P0"
 size: "20 min"
-status: "todo"
+status: "review"
 owner: ""
 depends_on: ["SPR-02","SPR-03"]
 spec_refs: ["§3.3","§4","§6","§9"]
@@ -86,15 +86,15 @@ endpoint URL with copy buttons.
 
 ## Acceptance criteria
 
-- [ ] Create is disabled until inference succeeds and settings are valid.
-- [ ] A valid create returns `201` and shows `baseUrl` and the endpoint URL.
-- [ ] Copy works for both URLs and announces "Copied" for 2 seconds.
-- [ ] `editToken` is not stored, copied or logged; only a small token-returned note appears.
-- [ ] Double-clicking create sends exactly one request.
-- [ ] The result panel scrolls into view; no new tab opens.
-- [ ] `400`, `409`, `422`, `429` and network errors render actionable messages.
-- [ ] Field-level `errors` from the API are shown under the matching field when possible.
-- [ ] Re-running the mock test later does not create another project.
+- [x] Create is disabled until inference succeeds and settings are valid.
+- [x] A valid create returns `201` and shows `baseUrl` and the endpoint URL.
+- [x] Copy works for both URLs and announces "Copied" for 2 seconds.
+- [x] `editToken` is not stored, copied or logged; only a small token-returned note appears.
+- [x] Double-clicking create sends exactly one request.
+- [x] The result panel scrolls into view; no new tab opens.
+- [x] `400`, `409`, `422`, `429` and network errors render actionable messages.
+- [x] Field-level `errors` from the API are shown under the matching field when possible.
+- [x] Re-running the mock test later does not create another project.
 
 ## Implementation notes
 
@@ -116,11 +116,11 @@ endpoint URL with copy buttons.
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Loading, error and success states handled.
-- [ ] Works at 360 px and by keyboard.
-- [ ] Build and typecheck pass.
-- [ ] No token or sample content in the console.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Loading, error and success states handled.
+- [x] Works at 360 px and by keyboard.
+- [x] Build and typecheck pass.
+- [x] No token or sample content in the console.
 
 ---
 

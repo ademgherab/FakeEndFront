@@ -1,4 +1,4 @@
-# MockAPI — Frontend Sprint Tasks
+# FakeEnd — Frontend Sprint Tasks
 
 **7 tasks** · P0: 6 · P2: 1 · 90-minute single-page sprint.
 
@@ -40,9 +40,13 @@ The previous 61-task multi-page plan is archived at
 
 ## Current repository note
 
-The repo may still contain legacy code from the old plan (landing page, `/new`, `/help`,
-meta provider, token store, wizard store, logs, schema editor). SPR-01 removes or stops
-using anything outside the sprint scope. Keep reusable Tailwind/shadcn primitives only.
+SPR-01 has removed the legacy multi-page code (`/new`, `/help`, `/projects`,
+`/p/[slug]`, logs, meta provider, token store, wizard store, schema editor, MSW, Playwright
+and Vitest). The repository now contains only the sprint app: the builder route (`/`) with
+the components under `src/components/builder/`, the static landing route (`/landing`) with
+the components under `src/components/landing/`, and
+`src/lib/{api,defaults,types,validation}.ts`.
+Legacy task files stay archived in [`archive/legacy-plan/`](./archive/legacy-plan/).
 
 ## Definition of Done
 

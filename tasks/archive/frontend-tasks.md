@@ -1,6 +1,6 @@
-# MockAPI — Frontend Task Breakdown
+# FakeEnd — Frontend Task Breakdown
 
-> Derived from `mockapi-technical-spec.md` (Phase 1 + Phase 2).
+> Derived from `fakeend-technical-spec.md` (Phase 1 + Phase 2).
 > Stack: **Next.js (App Router) + TypeScript**, browser-to-API calls, no BFF.
 > This file is the frontend build plan: scope, architecture, tasks, acceptance criteria, and sequencing.
 
@@ -21,7 +21,7 @@
 
 ## 1. Product scope from the frontend's point of view
 
-A developer pastes a JSON sample → the app infers a schema → they review/edit it → configure delay, random errors, list size, pagination and seed → create a project → get a live mock URL and a one-time `editToken` → test the URL and watch request logs.
+A developer pastes a JSON sample → the app infers a schema → they review/edit it → configure delay, random errors, list size, pagination and seed → create a project → get a live FakeEnd URL and a one-time `editToken` → test the URL and watch request logs.
 
 **In scope (frontend):**
 
@@ -30,7 +30,7 @@ A developer pastes a JSON sample → the app infers a schema → they review/edi
 | Create | Paste sample, infer, review/edit schema, configure settings, preview, create project |
 | Manage | Open a project with slug + token, rename, delete, add/edit/delete endpoints |
 | Endpoint editor | Edit schema tree, edit settings, preview, save (full replace or partial) |
-| Runtime testing | Call the real mock URL from the browser, show status/headers/body/latency |
+| Runtime testing | Call the real FakeEnd URL from the browser, show status/headers/body/latency |
 | Observability | Request log table with polling (2 s), filters, pagination, detail view, clear |
 | Limits | Everything driven by `GET /api/v1/meta`; never hard-code limits or generator lists |
 | Lifetime | Show expiry countdown, 410 expired state, daily usage quota |
@@ -50,7 +50,7 @@ A developer pastes a JSON sample → the app infers a schema → they review/edi
 | A7 | Code editor | CodeMirror 6 (`@uiw/react-codemirror`) for JSON; lazy-loaded |
 | A8 | Server state | TanStack Query; forms with React Hook Form + Zod |
 | A9 | Dates | Render in local time, label UTC where the API is UTC (`expiresAt`, logs) |
-| A10 | Branding | Placeholder "MockAPI", no logo required for demo |
+| A10 | Branding | Placeholder "FakeEnd", no logo required for demo |
 
 ### 1.2 Spec gaps to confirm with the backend dev
 
@@ -79,7 +79,7 @@ Browser
   ├─ Project workspace ................. client-rendered (token lives in localStorage)
   │     ├─ TanStack Query → Management API (Bearer)
   │     └─ Logs polling (2 s, after cursor, pauses when tab hidden)
-  └─ Try-it ............................ direct fetch to mock runtime URL (CORS *)
+  └─ Try-it ............................ direct fetch to FakeEnd runtime URL (CORS *)
 ```
 
 - **No BFF.** The browser calls `NEXT_PUBLIC_API_BASE_URL` directly. All management requests carry `Authorization: Bearer <editToken>` except `POST /projects` and `GET /meta` / `POST /infer` / `POST /preview`.
@@ -185,7 +185,7 @@ Suggested hackathon order: **M0 → WIZ-01,02,03,05,09,12,13 → PRJ-01,02 → R
 ## 4. Key UX decisions to implement consistently
 
 1. **Token is sacred and shown once.** The create-success screen blocks "Continue" until the user confirms they saved the token, offers copy and a `.txt`/`.json` download, and states that it cannot be recovered. Never display the full token again after leaving the screen (mask to `et_Qm3v…`).
-2. **The mock URL is the product.** Every endpoint card has a visible, monospace URL with a copy button. After creation, the success screen shows ready-to-paste `curl` and `fetch` snippets.
+2. **The FakeEnd URL is the product.** Every endpoint card has a visible, monospace URL with a copy button. After creation, the success screen shows ready-to-paste `curl` and `fetch` snippets.
 3. **Warnings from inference are advisory, never blocking.** Show them next to the affected node when the path resolves; otherwise in a banner.
 4. **Two editing modes for the schema.** Visual tree (default) and raw JSON (power users), kept in sync. Invalid raw JSON cannot be saved.
 5. **Destructive actions need typed confirmation** (delete project or endpoint, clear logs).
@@ -208,7 +208,7 @@ Suggested hackathon order: **M0 → WIZ-01,02,03,05,09,12,13 → PRJ-01,02 → R
 | **FND-07** | App shell | Header (logo, New project, Recent projects, Help), footer (privacy note, version), responsive container, skip-to-content link, page-header component, `EmptyState`. No layout shift on mobile. | P0 | M | FND-01 |
 | **FND-08** | Token storage service | `saveToken(slug, token, remember)`, `getToken(slug)`, `removeToken(slug)`, `listKnownProjects()`. Memory-only when "remember" is off. Never logs the value. Unit tests. | P0 | S | FND-01 |
 | **FND-09** | Draft store | Zustand store + `sessionStorage` persistence for the wizard: sample text, inferred schema, endpoint drafts, settings, step. Versioned key so old drafts are discarded. Reset action. | P0 | M | FND-01 |
-| **FND-10** | MSW mocks | Handlers for `/meta`, `/infer`, `/preview`, `/projects`, project/endpoint CRUD, `/logs`, and the mock runtime. Fixtures cover success, each error code, and an injected error. `pnpm dev:mock` runs the whole app without the backend. | P1 | L | FND-03, FND-04 |
+| **FND-10** | MSW mocks | Handlers for `/meta`, `/infer`, `/preview`, `/projects`, project/endpoint CRUD, `/logs`, and the FakeEnd runtime. Fixtures cover success, each error code, and an injected error. `pnpm dev:mock` runs the whole app without the backend. | P1 | L | FND-03, FND-04 |
 | **FND-11** | Tooling + CI | ESLint, Prettier, `tsc --noEmit`, Vitest, Playwright config, GitHub Actions (lint + typecheck + unit + build). Pre-commit hook optional. | P0 | M | FND-01 |
 | **FND-12** | Shared primitives | `CopyButton` (with copied state + fallback), `JsonViewer` (pretty/raw/collapse, copy), `ConfirmDialog` (optional typed phrase), `MethodBadge`, `StatusBadge`, `TimeAgo`, `RelativeCountdown`, `CodeBlock`. Storybook not required; a `/dev/components` page is enough. | P0 | M | FND-01 |
 
@@ -237,7 +237,7 @@ Suggested hackathon order: **M0 → WIZ-01,02,03,05,09,12,13 → PRJ-01,02 → R
 | **WIZ-13** | Create-success screen | Shows slug, base URL, all endpoint URLs, usage of `editToken` **once** with reveal/copy/masked state, download `.txt` + `.json`, "I saved it" checkbox gating Continue, explicit "cannot be recovered" copy, `curl`/`fetch` snippet with a real endpoint, "Open project" and "Create another". Token saved to storage only if the user opted in. | P0 | L | WIZ-12, FND-08 |
 | **WIZ-14** | Post-create checklist | On the project overview, a dismissible 3-item checklist: test the URL, try an error response, open the logs. Links deep-link to the relevant tab; state stored per slug. | P2 | S | PRJ-02 |
 
-**M1 exit criteria:** a first-time user can go from pasted JSON to a working mock URL in under 90 seconds, with the token safely captured, on desktop and mobile.
+**M1 exit criteria:** a first-time user can go from pasted JSON to a working FakeEnd URL in under 90 seconds, with the token safely captured, on desktop and mobile.
 
 ---
 
@@ -256,7 +256,7 @@ Suggested hackathon order: **M0 → WIZ-01,02,03,05,09,12,13 → PRJ-01,02 → R
 | **PRJ-09** | Project settings + danger zone | `/p/[slug]/settings`: rename, "clear logs" (`DELETE /logs`), "delete project" (typed slug confirmation, `DELETE /projects/{slug}`), token management (show masked, remove from this device, link to restore). Delete redirects to `/` with a toast. | P1 | M | PRJ-01 |
 | **PRJ-10** | Recent projects + restore | `/projects` lists entries from localStorage with name/slug/expiry/token-present badge; stale/expired entries shown as such; remove entry; "Restore access" form (slug + token) validates via `GET /projects/{slug}` then stores the token if requested. | P1 | M | PRJ-01 |
 
-**M2 exit criteria:** a returning user can restore a project with slug + token, edit an endpoint's schema and settings, and see the changes reflected in the mock URL.
+**M2 exit criteria:** a returning user can restore a project with slug + token, edit an endpoint's schema and settings, and see the changes reflected in the FakeEnd URL.
 
 ---
 
@@ -264,7 +264,7 @@ Suggested hackathon order: **M0 → WIZ-01,02,03,05,09,12,13 → PRJ-01,02 → R
 
 | ID | Task | Acceptance criteria | Pri | Size | Deps |
 |---|---|---|---|---|---|
-| **RUN-01** | Try-it console | Builds the real mock URL from `baseUrl + path`; renders inputs for each `{param}` and for query params; body editor for POST/PUT (with `Content-Type: application/json`). Sends a real `fetch` with the method; shows HTTP status, duration, `X-Request-Id`, `X-Mock-Delay-Ms`, `X-Mock-Injected-Error`, pagination headers, and pretty/raw body. Distinguishes **simulated** errors (badge) from real failures. | P0 | L | PRJ-06, FND-12 |
+| **RUN-01** | Try-it console | Builds the real FakeEnd URL from `baseUrl + path`; renders inputs for each `{param}` and for query params; body editor for POST/PUT (with `Content-Type: application/json`). Sends a real `fetch` with the method; shows HTTP status, duration, `X-Request-Id`, `X-Mock-Delay-Ms`, `X-Mock-Injected-Error`, pagination headers, and pretty/raw body. Distinguishes **simulated** errors (badge) from real failures. | P0 | L | PRJ-06, FND-12 |
 | **RUN-02** | Snippet generator | Generates `cURL`, `fetch`, and `axios` snippets from the current request; copies correctly with placeholders; warns when the URL contains unfilled `{param}`. | P1 | S | RUN-01 |
 | **RUN-03** | Log table | Columns: time, method, path, status (colored), injected badge, delay, latency, endpoint. Newest first. `GET /logs?limit=50`; "Load older" uses `nextCursor` as `before` until `null`. Empty, loading skeleton, error + retry. | P0 | L | PRJ-06, FND-12 |
 | **RUN-04** | Live polling | After the first load, poll every 2 s with `after=<latestId>`; prepend new rows with a subtle highlight; dedupe by `id`; pause on `document.hidden` and resume on visibility; pause/resume control; backoff on errors (2→4→8 s, cap 30 s) with an inline "live paused" state; stop on unmount; no overlapping requests. | P0 | L | RUN-03 |
@@ -292,7 +292,7 @@ Suggested hackathon order: **M0 → WIZ-01,02,03,05,09,12,13 → PRJ-01,02 → R
 | Schema-only save | `PUT /…/endpoints/{id}/schema` |
 | Settings-only save | `PUT /…/endpoints/{id}/settings` |
 | Logs | `GET /…/logs?limit&before&after&endpointId&status&injected`, `DELETE /…/logs` |
-| Try it | `{baseUrl}{path}` (mock runtime, no bearer, CORS `*`) |
+| Try it | `{baseUrl}{path}` (FakeEnd runtime, no bearer, CORS `*`) |
 
 ### 9.2 Error → UI behavior matrix
 
@@ -355,7 +355,7 @@ Do not poll when the Logs tab is not active. Do not re-fetch the full list on ev
 
 ### 9.6 Token handling
 
-- Stored under `mockapi.token.{slug}`; recent-project metadata under `mockapi.projects`.
+- Stored under `fakeend.token.{slug}`; recent-project metadata under `fakeend.projects`.
 - Never include the token in: query strings, `Referer`-bearing URLs, analytics events, console logs, error reports, or copied snippets.
 - Clear on `403` only after the user confirms; keep it on transient errors.
 - On logout/removal, also drop the in-memory React Query cache for that slug.
@@ -480,7 +480,7 @@ flowchart LR
 - cURL / OpenAPI / Postman import.
 - Screenshot-to-schema or any AI feature.
 - Stateful CRUD or persisted records.
-- PATCH/HEAD support on the mock runtime; SSE/WebSocket logs.
+- PATCH/HEAD support on the FakeEnd runtime; SSE/WebSocket logs.
 - Arabic/RTL or a language switcher.
 - A design system beyond shadcn/ui defaults.
 

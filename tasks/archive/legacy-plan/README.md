@@ -1,6 +1,10 @@
-# MockAPI — Frontend Tasks (one file per task)
+# FakeEnd — Frontend Tasks (one file per task)
 
-Generated from [`frontend-tasks.md`](../frontend-tasks.md) and `mockapi-technical-spec.md`.
+> **DEPRECATED — do not execute.** This is the archived multi-page plan. The current plan is
+> the 90-minute single-page sprint at [`../../../frontend-tasks.md`](../../../frontend-tasks.md)
+> and [`../README.md`](../README.md).
+
+Generated from [`frontend-tasks.md`](../frontend-tasks.md) and `fakeend-technical-spec.md`.
 Each task is a standalone Markdown file with YAML frontmatter, scope, acceptance criteria,
 implementation notes and a test plan.
 

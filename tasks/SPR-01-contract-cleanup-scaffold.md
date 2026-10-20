@@ -4,7 +4,7 @@ title: "Contract check, cleanup, scaffold, env, types and API client"
 milestone: "Sprint — 0–10 min"
 priority: "P0"
 size: "10 min"
-status: "todo"
+status: "done"
 owner: ""
 depends_on: []
 spec_refs: ["§1","§3","§4","§5","§11"]
@@ -84,16 +84,16 @@ scope. If an assumption in `frontend-spec.md` §11 is false, **stop and align**;
 
 ## Acceptance criteria
 
-- [ ] Backend CORS and the §11 assumptions are confirmed. If not, work stops with a written
+- [x] Backend CORS and the §11 assumptions are confirmed. If not, work stops with a written
       note of the mismatch.
-- [ ] `npm install && npm run dev` starts and `/` renders the builder shell.
-- [ ] Only `/` remains; legacy out-of-scope routes are removed.
-- [ ] Only one lockfile is committed and `npm run build` passes.
-- [ ] `lib/types.ts`, `lib/defaults.ts` and `lib/api.ts` exist and compile.
-- [ ] `BASE` uses `NEXT_PUBLIC_API_BASE_URL` with the `http://localhost:5031` fallback.
-- [ ] No Next.js API route, BFF, state manager, Zod, React Hook Form, TanStack Query,
+- [x] `npm install && npm run dev` starts and `/` renders the builder shell.
+- [x] Only `/` remains; legacy out-of-scope routes are removed.
+- [x] Only one lockfile is committed and `npm run build` passes.
+- [x] `lib/types.ts`, `lib/defaults.ts` and `lib/api.ts` exist and compile.
+- [x] `BASE` uses `NEXT_PUBLIC_API_BASE_URL` with the `http://localhost:5031` fallback.
+- [x] No Next.js API route, BFF, state manager, Zod, React Hook Form, TanStack Query,
       CodeMirror or MSW was added.
-- [ ] No sample/schema/token is written to `localStorage` or `sessionStorage`.
+- [x] No sample/schema/token is written to `localStorage` or `sessionStorage`.
 
 ## Implementation notes
 
@@ -114,10 +114,10 @@ scope. If an assumption in `frontend-spec.md` §11 is false, **stop and align**;
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Build and typecheck pass.
-- [ ] No console errors or warnings from removed imports.
-- [ ] The repository has no reference to the old multi-page flow.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Build and typecheck pass.
+- [x] No console errors or warnings from removed imports.
+- [x] The repository has no reference to the old multi-page flow.
 
 ---
 

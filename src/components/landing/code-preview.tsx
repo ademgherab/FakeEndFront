@@ -1,5 +1,9 @@
 import { landingContent } from "@/content/landing";
 
+/**
+ * The visual proof: the sample on the left, the URL it is served from, and
+ * the response that comes back with the same shape and fresh values.
+ */
 export function CodePreview() {
   const code = landingContent.code;
 

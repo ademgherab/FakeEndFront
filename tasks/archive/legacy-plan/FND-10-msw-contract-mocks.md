@@ -26,7 +26,7 @@ Frontend work must not be blocked by backend availability. Mocks generated from 
 
 ## Scope
 
-- Handlers for `/meta`, `/infer`, `/preview`, project CRUD, endpoint CRUD, `/logs` and the mock runtime.
+- Handlers for `/meta`, `/infer`, `/preview`, project CRUD, endpoint CRUD, `/logs` and the FakeEnd runtime.
 - Fixtures for success and every documented error code, including an injected 503.
 - Stateful in-memory project/endpoint/log store so create → read → update works in a session.
 - `pnpm dev:mock` mode that enables the worker automatically in development.

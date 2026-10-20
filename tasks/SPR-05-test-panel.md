@@ -4,7 +4,7 @@ title: "Test panel, headers and injected-error badge"
 milestone: "Sprint — 65–80 min"
 priority: "P0"
 size: "15 min"
-status: "todo"
+status: "review"
 owner: ""
 depends_on: ["SPR-04"]
 spec_refs: ["§3.5","§6","§9"]
@@ -22,8 +22,8 @@ spec_refs: ["§3.5","§6","§9"]
 
 ## Context
 
-The mock URL is only useful if the user can call it immediately. This panel sends a real
-request from the browser to the mock runtime and renders the response, including the
+The FakeEnd URL is only useful if the user can call it immediately. This panel sends a real
+request from the browser to the FakeEnd runtime and renders the response, including the
 runtime headers that prove delay and error injection are working.
 
 ## Scope
@@ -51,21 +51,21 @@ runtime headers that prove delay and error injection are working.
   - For `RuntimeErrorBody`, show the envelope's `status`, `code`, `title`, `message` and
     `requestId`.
 - On network/CORS failure, show:
-  `Cannot reach the mock URL. Is the backend running and is CORS enabled?`
+  `Cannot reach the FakeEnd URL. Is the backend running and is CORS enabled?`
   Include the attempted URL.
 - Re-running the test must **not** create a new project.
 
 ## Acceptance criteria
 
-- [ ] A `GET` test shows status, body, latency and the three runtime header chips.
-- [ ] Calling twice returns different data (no client-side caching).
-- [ ] With error rate 100%, the panel shows the injected status and a **simulated** badge.
-- [ ] The runtime error envelope is readable; `injected: true` is visible.
-- [ ] A non-JSON response shows raw text plus status.
-- [ ] `POST`/`PUT` send `{}`; `DELETE` and `GET` send no body.
-- [ ] A network/CORS failure shows an actionable message with the URL.
-- [ ] Testing again does not create another project.
-- [ ] The button exposes `aria-busy` while testing.
+- [x] A `GET` test shows status, body, latency and the three runtime header chips.
+- [x] Calling twice returns different data (no client-side caching).
+- [x] With error rate 100%, the panel shows the injected status and a **simulated** badge.
+- [x] The runtime error envelope is readable; `injected: true` is visible.
+- [x] A non-JSON response shows raw text plus status.
+- [x] `POST`/`PUT` send `{}`; `DELETE` and `GET` send no body.
+- [x] A network/CORS failure shows an actionable message with the URL.
+- [x] Testing again does not create another project.
+- [x] The button exposes `aria-busy` while testing.
 
 ## Implementation notes
 
@@ -89,11 +89,11 @@ runtime headers that prove delay and error injection are working.
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Loading, error and success states handled.
-- [ ] Works at 360 px and by keyboard.
-- [ ] Build and typecheck pass.
-- [ ] No response body is logged to the console.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Loading, error and success states handled.
+- [x] Works at 360 px and by keyboard.
+- [x] Build and typecheck pass.
+- [x] No response body is logged to the console.
 
 ---
 

@@ -4,7 +4,7 @@ title: "Endpoint settings form"
 milestone: "Sprint — 25–45 min"
 priority: "P0"
 size: "20 min"
-status: "todo"
+status: "review"
 owner: ""
 depends_on: ["SPR-01"]
 spec_refs: ["§3.3","§5","§6","§9"]
@@ -22,7 +22,7 @@ spec_refs: ["§3.3","§5","§6","§9"]
 
 ## Context
 
-The settings form turns the inferred schema into a mock endpoint. The backend and the UI
+The settings form turns the inferred schema into a fake endpoint. The backend and the UI
 must agree on the same defaults and validation rules. The form owns validity; the page uses
 that validity to enable **Create mock**.
 
@@ -45,8 +45,8 @@ Build `SettingsForm` with controlled inputs:
 Rules:
 
 - Changing `method` updates `successStatus` to the method default.
-- When `errors.ratePercent` is 0, error codes may stay `[500]` but are not sent? Keep the
-  payload shape stable: send the codes even at 0; the backend ignores them.
+- Keep the payload shape stable when `errors.ratePercent` is 0: send the current
+  `statusCodes` (the backend ignores them at 0%).
 - Trim `path`; add a leading `/` if the user omitted it; reject spaces.
 - Expose an `isValid` boolean and a field-error map to the page.
 - Render every field error inline and link it with `aria-describedby`.
@@ -59,18 +59,18 @@ Rules:
 
 ## Acceptance criteria
 
-- [ ] Defaults match the table above.
-- [ ] Selecting `POST`/`PUT`/`DELETE` updates the success-status default and allows only
+- [x] Defaults match the table above.
+- [x] Selecting `POST`/`PUT`/`DELETE` updates the success-status default and allows only
       `200`, `201`, `202`, `204`.
-- [ ] Path without a leading `/` is normalised; spaces, `?` and `#` are rejected.
-- [ ] `min > max` is rejected for both delay and list size.
-- [ ] Delay and list values outside their ranges are rejected.
-- [ ] Error rate outside `0..100`, more than one decimal, or > 10 codes is rejected.
-- [ ] Error codes outside `400..599` or duplicates are rejected.
-- [ ] Error rate > 0 with no codes is rejected.
-- [ ] Presets apply the expected values.
-- [ ] The page receives `isValid` and disables **Create mock** when false.
-- [ ] Every input has a label and inline errors use `aria-describedby`.
+- [x] Path without a leading `/` is normalised; spaces, `?` and `#` are rejected.
+- [x] `min > max` is rejected for both delay and list size.
+- [x] Delay and list values outside their ranges are rejected.
+- [x] Error rate outside `0..100`, more than one decimal, or > 10 codes is rejected.
+- [x] Error codes outside `400..599` or duplicates are rejected.
+- [x] Error rate > 0 with no codes is rejected.
+- [x] Presets apply the expected values.
+- [x] The page receives `isValid` and disables **Create mock** when false.
+- [x] Every input has a label and inline errors use `aria-describedby`.
 
 ## Implementation notes
 
@@ -78,7 +78,7 @@ Rules:
 - Do not use Zod/React Hook Form. Plain TypeScript validators are enough for the sprint.
 - Keep the settings object shape exactly as `EndpointSettings` in `lib/types.ts`.
 - `wrapInList` lives with the sample input (SPR-02), not in this form.
-- No `successStatus: 204` body hints are needed because the mock runtime is tested
+- No `successStatus: 204` body hints are needed because the FakeEnd runtime is tested
   separately. If `204` is selected, the test panel will show an empty body.
 - Do not hard-code limits in multiple components; read from `defaults.ts` or meta.
 
@@ -91,11 +91,11 @@ Rules:
 
 ## Definition of Done
 
-- [ ] Acceptance criteria verified against the real backend.
-- [ ] Form validity is based on the same rules the API enforces.
-- [ ] Works at 360 px and by keyboard.
-- [ ] Build and typecheck pass.
-- [ ] No hard-coded limits scattered outside `defaults.ts`.
+- [x] Acceptance criteria verified against the real backend.
+- [x] Form validity is based on the same rules the API enforces.
+- [x] Works at 360 px and by keyboard.
+- [x] Build and typecheck pass.
+- [x] No hard-coded limits scattered outside `defaults.ts`.
 
 ---
 
